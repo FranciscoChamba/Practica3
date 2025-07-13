@@ -4,7 +4,7 @@ import java.util.Random;
 
 /**
  *
- * @author Usuario iTC
+ * @author Usuario 
  */
 import java.util.Random;
 import javax.swing.table.DefaultTableModel;
