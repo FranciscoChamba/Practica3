@@ -7,6 +7,7 @@ import java.util.Random;
  * @author Usuario iTC
  */
 import java.util.Random;
+import javax.swing.table.DefaultTableModel;
 
 public class Controller_laberinto {
     private char[][] matriz;
@@ -48,6 +49,20 @@ public class Controller_laberinto {
             }
         }
     }
+    public DefaultTableModel generarModeloTabla() {
+    DefaultTableModel modelo = new DefaultTableModel(dimension, dimension);
+    for (int i = 0; i < dimension; i++) {
+        for (int j = 0; j < dimension; j++) {
+            char simbolo = matriz[i][j];
+            if (simbolo == '#' || simbolo == 'E' || simbolo == 'S') {
+                modelo.setValueAt(simbolo, i, j);
+            } else {
+                modelo.setValueAt(" ", i, j);
+            }
+        }
+    }
+    return modelo;
+}
 
     private void establecerEntradaSalida() {
         matriz[0][0] = 'E';

@@ -22,28 +22,7 @@ public class Laberinto extends javax.swing.JDialog {
     }
   private Controller_laberinto controlador;
     private int dimension = 10;
-    private void actualizarTabla() {
-    char[][] matriz = controlador.getMatriz();
-    DefaultTableModel modelo = new DefaultTableModel(dimension, dimension);
-    T_L.setModel(modelo);
-    T_L.setRowHeight(20);
-for (int i = 0; i < T_L.getColumnCount(); i++) {
-    T_L.getColumnModel().getColumn(i).setPreferredWidth(20);
-}
-
-    for (int i = 0; i < dimension; i++) {
-        for (int j = 0; j < dimension; j++) {
-            char simbolo = matriz[i][j];
-
-            if (simbolo == '#' || simbolo == 'E' || simbolo == 'S') {
-                modelo.setValueAt(simbolo, i, j);
-            } else {
-                modelo.setValueAt(" ", i, j); 
-            }
-        }
-    }
-}
-
+  
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -186,22 +165,25 @@ for (int i = 0; i < T_L.getColumnCount(); i++) {
     }// </editor-fold>//GEN-END:initComponents
 
     private void GENERARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GENERARActionPerformed
-     dimension = (int) jSpinner2.getValue();
-     if (dimension < 5 || dimension > 100) {
+    dimension = (int) jSpinner2.getValue();
+    if (dimension < 5 || dimension > 100) {
         JOptionPane.showMessageDialog(this, "Dimensión inválida. Elija entre 5 y 100.");
         return;
     }
     controlador = new Controller_laberinto(dimension);
-    controlador.regenerar(); 
-    actualizarTabla();
+    controlador.regenerar();
+
+    T_L.setModel(controlador.generarModeloTabla());
+    T_L.setRowHeight(20);
+    for (int i = 0; i < T_L.getColumnCount(); i++) {
+        T_L.getColumnModel().getColumn(i).setPreferredWidth(20);
+    }
 
     }//GEN-LAST:event_GENERARActionPerformed
 
     private void ELIMINARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ELIMINARActionPerformed
          controlador = null;
     DefaultTableModel modeloVacio = new DefaultTableModel(dimension, dimension);
-
-    // Rellenar con espacios vacíos para que la tabla esté "en blanco"
     for (int i = 0; i < dimension; i++) {
         for (int j = 0; j < dimension; j++) {
             modeloVacio.setValueAt(" ", i, j);
